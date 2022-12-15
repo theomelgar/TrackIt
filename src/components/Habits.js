@@ -4,7 +4,7 @@ import { StyleHabits } from "./StyleHabits";
 import Habit from "./Habit";
 import styled from "styled-components";
 import { useState } from "react";
-
+import Menu from "./Menu";
 export default function Habits() {
     const [empty, setEmpty] = useState(true)
     return (
@@ -13,11 +13,12 @@ export default function Habits() {
             <UserHabits />
             <Habit setEmpty={setEmpty}>
             </Habit>
-            {empty && ( 
+            {empty && (
                 <Alert>
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 </Alert>
             )}
+            <Menu></Menu>
         </StyleHabits>
     )
 }
