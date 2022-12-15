@@ -3,58 +3,65 @@ import { useContext } from "react"
 import { ImageContext } from "../context/image"
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
+import { Link } from "react-router-dom";
 export default function Menu() {
     // const {} = useContext()
     const percentage = 66;
     return (
         <StyleMenu>
             <div style={{ width: 91, height: 91 }}>
-                <CircularProgressbar
-                    value={percentage}
-                    text="Hoje"
-                    background={true}
-                    backgroundPadding={7}
-                    styles={{
-                        // Customize the root svg element
-                        root: {},
-                        // Customize the path, i.e. the "completed progress"
-                        path: {
-                            // Path color
-                            stroke: `white`,
-                            // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-                            strokeLinecap: 'round',
-                            // Customize transition animation
-                            transition: 'stroke-dashoffset 0.5s ease 0s',
-                            // Rotate the path
-                            transform: 'rotate(0.25turn)',
-                            transformOrigin: 'center center',
-                        },
-                        // Customize the circle behind the path, i.e. the "total progress"
-                        trail: {
-                            // Trail color
-                            stroke: '#52B6FF',
-                            // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-                            strokeLinecap: 'round',
-                            // Rotate the trail
-                            transform: 'rotate(0.25turn)',
-                            transformOrigin: 'center center',
-                        },
-                        // Customize the text
-                        text: {
-                            // Text color
-                            fill: 'white',
-                            // Text size
-                            fontSize: '17.976px',
-                        },
-                        // Customize background - only used when the `background` prop is true
-                        background: {
-                            fill: '#52B6FF',
-                        },
-                    }}
-                />
+                <Link to={"/hoje"}>
+                    <CircularProgressbar
+                        value={percentage}
+                        text="Hoje"
+                        background={true}
+                        backgroundPadding={7}
+                        styles={{
+                            // Customize the root svg element
+                            root: {},
+                            // Customize the path, i.e. the "completed progress"
+                            path: {
+                                // Path color
+                                stroke: `white`,
+                                // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                                strokeLinecap: 'round',
+                                // Customize transition animation
+                                transition: 'stroke-dashoffset 0.5s ease 0s',
+                                // Rotate the path
+                                transform: 'rotate(0.25turn)',
+                                transformOrigin: 'center center',
+                            },
+                            // Customize the circle behind the path, i.e. the "total progress"
+                            trail: {
+                                // Trail color
+                                stroke: '#52B6FF',
+                                // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                                strokeLinecap: 'round',
+                                // Rotate the trail
+                                transform: 'rotate(0.25turn)',
+                                transformOrigin: 'center center',
+                            },
+                            // Customize the text
+                            text: {
+                                // Text color
+                                fill: 'white',
+                                // Text size
+                                fontSize: '17.976px',
+                            },
+                            // Customize background - only used when the `background` prop is true
+                            background: {
+                                fill: '#52B6FF',
+                            },
+                        }}
+                    />
+                </Link>
             </div>
-            <p>Hábitos</p>
-            <p>Histórico</p>
+            <Link to={"/habitos"}>
+                <p>Hábitos</p>
+            </Link>
+            <Link to={"/historico"}>
+                <p>Histórico</p>
+            </Link>
         </StyleMenu>
     )
 }

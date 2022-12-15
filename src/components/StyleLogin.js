@@ -4,7 +4,7 @@ const LogInStyle = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 10% auto;
+    margin: 160px auto;
     background-color: beige;
     gap: 10px;
     form{

@@ -10,7 +10,7 @@ export default function Habits() {
     return (
         <StyleHabits>
             <NavBar />
-            <UserHabits />
+            <UserHabits/>
             <Habit setEmpty={setEmpty}>
             </Habit>
             {empty && (
