@@ -8,7 +8,7 @@ import axios from "axios"
 import { ImageContext } from "../context/image"
 
 export default function LogIn() {
-    const {setInfo} = useContext(ImageContext)
+    const { setInfo } = useContext(ImageContext)
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
     const [load, setLoad] = useState("Entrar")
@@ -48,11 +48,25 @@ export default function LogIn() {
             <img src={logo} alt="TrackIt" />
             <form onSubmit={send}>
                 <label for="email" />
-                <input type="email" id="emal" placeholder="email"
-                    value={email} required disabled={off} onChange={e => setEmail(e.target.value)} />
+                <input
+                    type="email"
+                    id="emal"
+                    placeholder="email"
+                    value={email}
+                    required
+                    disabled={off}
+                    onChange={e => setEmail(e.target.value)}
+                />
                 <label for="password" />
-                <input type="password" id="password" placeholder="senha"
-                    value={password} required disabled={off} onChange={e => setPassword(e.target.value)} />
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="senha"
+                    value={password}
+                    required
+                    disabled={off}
+                    onChange={e => setPassword(e.target.value)}
+                />
                 <button type="submit" onClick={() => {
                     setLoad(Loading)
                     setOff(true)

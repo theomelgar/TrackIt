@@ -1,17 +1,21 @@
 import Menu from "./Menu";
 import NavBar from "./NavBar"
-import UserHabits from "./UserHabits";
 import { StyleHabits } from "./StyleHabits";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
+import { ListContext } from "../context/list";
 
-export default function Today(){
-    const [empty,setEmpty] = useState(true)
-    return(
+export default function Today() {
+    const [empty, setEmpty] = useState(true)
+    const dayjs = require('dayjs')
+    const {week} = useContext(ListContext)
+    //import dayjs from 'dayjs' // ES 2015
+    return (
         <StyleHabits>
             <NavBar />
             <Date>
-                <p>Quinta, 15/12</p>
+                <p>{week[dayjs().day()]
+                }, {dayjs().date()}/{dayjs().month()+1}</p>
             </Date>
             {empty && (
                 <Alert>
@@ -20,7 +24,7 @@ export default function Today(){
             )}
             <Habit setEmpty={setEmpty}>
             </Habit>
-            <Menu/>
+            <Menu />
         </StyleHabits>
     )
 }

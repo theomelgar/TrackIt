@@ -1,6 +1,5 @@
 import Menu from "./Menu";
 import NavBar from "./NavBar"
-import UserHabits from "./UserHabits";
 import { StyleHabits } from "./StyleHabits";
 import { useState } from "react";
 import styled from "styled-components";

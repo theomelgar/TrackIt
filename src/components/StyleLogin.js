@@ -21,7 +21,7 @@ const LogInStyle = styled.div`
             border-radius: 5px;
             font-size: 19.976px;
             line-height: 25px;
-            color: black;
+            color: #666666;
             &::placeholder{
                 color: #DBDBDB;
             }
@@ -42,6 +42,10 @@ const LogInStyle = styled.div`
             line-height: 26px;
             text-align: center;
             color: #FFFFFF;
+            border: none;
+            &:hover{
+                cursor: pointer;
+            }
         }
     }
     p{

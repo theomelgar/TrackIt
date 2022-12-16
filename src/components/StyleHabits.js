@@ -10,4 +10,5 @@ export const StyleHabits = styled.div`
     align-items: center;
     margin-bottom:100px;
     background: #F2F2F2;
+    gap: 15px;
 `
