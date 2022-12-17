@@ -4,12 +4,27 @@ import Habit from "./Habit";
 import styled from "styled-components";
 import Menu from "./Menu";
 import Add from "./Add";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ListContext } from "../context/list";
+import axios from "axios";
+import { BASE_URL } from "../constants/urls";
+import { ImageContext } from "../context/image";
 
 export default function Habits() {
     const [start, setStart] = useState(false)
     const {empty} = useContext(ListContext)
+    const {info} = useContext(ImageContext)
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${info.token}`
+        }
+    }
+    useEffect(() => {
+        axios.get(`${BASE_URL}habits`,config)
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
+    }, [])
+
     return (
         <StyleHabits>
             <NavBar />
