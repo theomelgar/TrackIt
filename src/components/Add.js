@@ -10,7 +10,9 @@ export default function Add() {
     const [habit, setHabit] = useState()
     const [selectedDays, setSelectedDays] = useState([])
     const [form, setForm] = useState({})
-    console.log(week.map((d) => d.name))
+
+    console.log(selectedDays)
+
     function handleForm(e) {
         const { value, name } = e.target
         setForm({ ...form, [name]: value })
@@ -21,24 +23,21 @@ export default function Add() {
     function cancelar() {
         return;
     }
-    function handleDay(Day) {
-        const isSelected = selectedDays.some((s) => s.id === Day.id)
+    function handleDay(day) {
+        const isSelected = selectedDays.some((s) => s.id === day.id)
 
         if (isSelected) {
-            const unselect = window.confirm("tem certeza que quer retirar esse assento?")
-
-            if (unselect) {
-                const newList = selectedDays.filter((s) => s.id !== Day.id)
+                const newList = selectedDays.filter((s) => s.id !== day.id)
                 setSelectedDays(newList)
 
                 const newForm = { ...form }
-                delete newForm[`name${Day.name}`]
-                delete newForm[`cpf${Day.name}`]
+                delete newForm[`name${day.name}`]
+                delete newForm[`cpf${day.name}`]
                 setForm(newForm)
-            }
+            
 
         } else {
-            setSelectedDays([...selectedDays, Day])
+            setSelectedDays([...selectedDays, day])
         }
     }
 
