@@ -1,20 +1,47 @@
 import { useContext, useState } from "react"
 import styled from "styled-components"
 import { ListContext } from "../context/list";
+import { dayColors } from "../constants/colors";
+import { useEffect } from "react";
+import Day from "./Day";
 
 export default function Add() {
-    const [isActive, setIsActive] = useState(false);
-    const {week} = useContext(ListContext)
+    const { week } = useContext(ListContext)
     const [habit, setHabit] = useState()
+    const [selectedDays, setSelectedDays] = useState([])
+    const [form, setForm] = useState({})
+    console.log(week.map((d) => d.name))
+    function handleForm(e) {
+        const { value, name } = e.target
+        setForm({ ...form, [name]: value })
+    }
     function add(e) {
         e.preventDefault()
     }
     function cancelar() {
         return;
     }
-    function handleClick(l) {
-        setIsActive(!isActive)
+    function handleDay(Day) {
+        const isSelected = selectedDays.some((s) => s.id === Day.id)
+
+        if (isSelected) {
+            const unselect = window.confirm("tem certeza que quer retirar esse assento?")
+
+            if (unselect) {
+                const newList = selectedDays.filter((s) => s.id !== Day.id)
+                setSelectedDays(newList)
+
+                const newForm = { ...form }
+                delete newForm[`name${Day.name}`]
+                delete newForm[`cpf${Day.name}`]
+                setForm(newForm)
+            }
+
+        } else {
+            setSelectedDays([...selectedDays, Day])
+        }
     }
+
     return (
         <StyleAdd>
             <form onSubmit={add}>
@@ -25,17 +52,14 @@ export default function Add() {
                     value={habit}
                 />
                 <Days>
-                {week.map((l)=>
-                
-                    <Day key={l}
-                    style={{
-                    background: isActive ? '#CFCFCF' : '#ffffff',
-                    color: isActive ? 'white' : '#DBDBDB',
-                    border: isActive ? '1px solid #CFCFCF' : '1px solid #D5D5D5',
-                }}
-                    onClick={()=>handleClick(l)}
-                >{l[0]}</Day>
-                )}
+                    {week.map((day) => (
+                        <Day
+                            key={day.id}
+                            day={day}
+                            handleDay={handleDay}
+                            isSelected={selectedDays.some((s) => s.id === day.id)}
+                        />
+                    ))}
                 </Days>
                 <Salvar type='submit'>Salvar</Salvar>
                 <Cancelar onClick={cancelar}>Cancelar</Cancelar>
@@ -112,12 +136,4 @@ const Days = styled.div`
     justify-content: flex-start;
     align-items: center;
     gap: 4px;
-`
-const Day = styled.button`
-    width: 30px;
-    height: 30px;
-    border-radius: 5px;
-    font-size: 19.976px;
-    line-height: 25px;
-    cursor: pointer;
 `
