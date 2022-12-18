@@ -52,5 +52,10 @@ p{
 	font-style: normal;
 	font-weight: 400;
 }
+button{
+  cursor: pointer;
+  :hover {
+    opacity: 0.7;
+}
 `
 export default GlobalStyle

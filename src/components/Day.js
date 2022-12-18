@@ -3,19 +3,19 @@ import styled from "styled-components"
 import { dayColors } from "../constants/colors"
 
 export default function Day({ day, handleDay, isSelected }) {
-
+    const [status, setStatus] = useState("available")
     useEffect(() => {
         if (isSelected) {
             setStatus("selected")
         } else if (day.isAvailable) {
             setStatus("available")
         } 
-    }, [isSelected])
-
-    const [status, setStatus] = useState("available")
+    }, [isSelected,day.isAvailable])
 
     return (
-        <DayItem status={status} onClick={() => handleDay(day)}>
+        <DayItem 
+            status={status} 
+            onClick={() => handleDay(day)}>
             {day.name[0]}
         </DayItem>
 

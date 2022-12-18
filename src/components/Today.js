@@ -6,24 +6,25 @@ import styled from "styled-components";
 import { ListContext } from "../context/list";
 
 export default function Today() {
-    const [empty, setEmpty] = useState(true)
     const dayjs = require('dayjs')
-    const {week} = useContext(ListContext)
+    const { week, empty } = useContext(ListContext)
     //import dayjs from 'dayjs' // ES 2015
+    console.log(week)
     return (
         <StyleHabits>
             <NavBar />
             <Date>
-                <p>{week[dayjs().day()]
-                }, {dayjs().date()}/{dayjs().month()+1}</p>
+                <p>{week[dayjs().day()].name
+                }, {dayjs().date()}/{dayjs().month() + 1}</p>
             </Date>
-            {empty && (
+            {empty ? (
                 <Alert>
                     <p>Nenhum hábito concluído ainda</p>
                 </Alert>
-            )}
-            <Habit setEmpty={setEmpty}>
-            </Habit>
+            ) :
+                <Habit>
+                </Habit>
+            }
             <Menu />
         </StyleHabits>
     )

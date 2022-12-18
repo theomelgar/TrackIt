@@ -4,97 +4,104 @@ import { ListContext } from "../context/list";
 import { dayColors } from "../constants/colors";
 import { useEffect } from "react";
 import Day from "./Day";
+import { BASE_URL } from "../constants/urls";
+import axios from "axios";
 
-export default function Add() {
+export default function Add({ setStart, token }) {
     const { week } = useContext(ListContext)
     const [habit, setHabit] = useState()
     const [selectedDays, setSelectedDays] = useState([])
-    const [form, setForm] = useState({})
-
-    console.log(selectedDays)
-
-    function handleForm(e) {
-        const { value, name } = e.target
-        setForm({ ...form, [name]: value })
-    }
-    function add(e) {
-        e.preventDefault()
-    }
-    function cancelar() {
-        return;
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
     }
     function handleDay(day) {
         const isSelected = selectedDays.some((s) => s.id === day.id)
-
+        console.log("a")
         if (isSelected) {
-                const newList = selectedDays.filter((s) => s.id !== day.id)
-                setSelectedDays(newList)
-
-                const newForm = { ...form }
-                delete newForm[`name${day.name}`]
-                delete newForm[`cpf${day.name}`]
-                setForm(newForm)
-            
+            const newList = selectedDays.filter((s) => s.id !== day.id)
+            setSelectedDays(newList)
 
         } else {
             setSelectedDays([...selectedDays, day])
         }
     }
 
+    function add() {
+        const body = {
+            name: habit,
+            days: selectedDays.map((day) => day.id)
+        }
+        console.log(body)
+        if (selectedDays.length === 0) {
+            alert("Selecione pelo menos um dia")
+            return
+        }
+        else if (habit === undefined) {
+            alert("Escolha um hábito")
+            return
+        }
+        else {
+            axios.post(`${BASE_URL}habits`, body, config)
+                .then(res => {
+                    console.log(`add ${res}`)
+                    setStart(false)
+                    window.refresh()
+                })
+                .catch(err => console.log(err.response.data))
+        }
+    }
+
     return (
         <StyleAdd>
-            <form onSubmit={add}>
-                <input
-                    type="text"
-                    placeholder="nome do hábito"
-                    onChange={(e) => setHabit(e.target.value)}
-                    value={habit}
-                />
-                <Days>
-                    {week.map((day) => (
-                        <Day
-                            key={day.id}
-                            day={day}
-                            handleDay={handleDay}
-                            isSelected={selectedDays.some((s) => s.id === day.id)}
-                        />
-                    ))}
-                </Days>
-                <Salvar type='submit'>Salvar</Salvar>
-                <Cancelar onClick={cancelar}>Cancelar</Cancelar>
-            </form>
+            <input
+                type="text"
+                placeholder="nome do hábito"
+                onChange={(e) => setHabit(e.target.value)}
+                value={habit}
+            />
+            <Days>
+                {week.map((day) => (
+                    <Day
+                        key={day.id}
+                        day={day}
+                        handleDay={handleDay}
+                        isSelected={selectedDays.some((s) => s.id === day.id)}
+                    />
+                ))}
+            </Days>
+            <Salvar onClick={add}>Salvar</Salvar>
+            <Cancelar onClick={() => setStart(false)}>Cancelar</Cancelar>
         </StyleAdd>
     )
 }
 
 const StyleAdd = styled.div`
-    width: 340px;
+    width: 90%;
     height: 180px;
     background: #FFFFFF;
     border-radius: 5px;
     position: relative;
-    form{
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        margin: auto 12px;
-        gap: 7px;
-        input{
-            margin-top: 10px;
-            width: 303px;
-            height: 45px;
-            background: #FFFFFF;
-            border: 1px solid #D5D5D5;
-            border-radius: 5px;
-            font-size: 19.976px;
-            line-height: 25px;
-            color: #666666;
-            &::placeholder{
-                color: #DBDBDB;
-            }
-            &:disabled{
-                color: #AFAFAF;
-            }
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    input{
+        margin: 10px 6px;
+        width: 90%;
+        height: 45px;
+        background: #FFFFFF;
+        border: 1px solid #D5D5D5;
+        border-radius: 5px;
+        font-size: 19.976px;
+        line-height: 25px;
+        color: #666666;
+        &::placeholder{
+            color: #DBDBDB;
+        }
+        &:disabled{
+            color: #AFAFAF;
         }
     }
 `
@@ -131,6 +138,7 @@ const Cancelar = styled.div`
     color: #52B6FF;
 `
 const Days = styled.div`
+    margin-left: 10px ;
     display: flex;
     justify-content: flex-start;
     align-items: center;

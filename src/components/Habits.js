@@ -9,33 +9,33 @@ import { ListContext } from "../context/list";
 import axios from "axios";
 import { BASE_URL } from "../constants/urls";
 import { ImageContext } from "../context/image";
+import { confirmAlert } from "react-confirm-alert";
 
 export default function Habits() {
     const [start, setStart] = useState(false)
-    const {empty} = useContext(ListContext)
-    const {info} = useContext(ImageContext)
-    const config = {
-        headers: {
-            "Authorization": `Bearer ${info.token}`
-        }
-    }
+    const { info, token } = useContext(ImageContext)
+    const [list, setList] = useState([])
     useEffect(() => {
-        axios.get(`${BASE_URL}habits`,config)
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err))
-    }, [])
+        axios.get(`${BASE_URL}habits`,
+            { headers: { Authorization: `Bearer ${token}` } }
+        )
+            .then(res => {
+                console.log(res.data)
+                setList(res.data)
+            })
+            .catch(err => console.log(err.response.data.message))
+    }, [token])
 
     return (
         <StyleHabits>
             <NavBar />
             <UserHabits>
                 <p>Meus hábitos</p>
-                <div onClick={()=>setStart(!start)}>+</div>
+                <div onClick={() => setStart(!start)}>+</div>
             </UserHabits>
-            {start && <Add></Add>}
-            <Habit>
-            </Habit>
-            {empty && (
+            {start && <Add token={token} setStart={setStart} info={info}></Add>}
+            {list.map((activity) => <Habit token={token} activity={activity} />)}
+            {list.length==0 && (
                 <Alert>
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 </Alert>
