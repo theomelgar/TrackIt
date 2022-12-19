@@ -18,7 +18,7 @@ export default function CardToday({ activity, token, setUpdate }) {
                 setUpdate(up=>!up)
             }
             )
-            .catch(err => console.log(err.response.data.message))
+            .catch(err => alert(err.response.data.message))
     }
     function unCheck() {
         api
@@ -28,7 +28,7 @@ export default function CardToday({ activity, token, setUpdate }) {
                 setUpdate(up=>!up)
             }
             )
-            .catch(err => console.log(err.response.data.message))
+            .catch(err => alert(err.response.data.message))
     }
     return (
         <StyleToday>

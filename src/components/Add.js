@@ -15,7 +15,6 @@ export default function Add({ setStart, token, setUpdate }) {
     }
     function handleDay(day) {
         const isSelected = selectedDays.some((s) => s.id === day.id)
-        console.log("a")
         if (isSelected) {
             const newList = selectedDays.filter((s) => s.id !== day.id)
             setSelectedDays(newList)
@@ -30,7 +29,6 @@ export default function Add({ setStart, token, setUpdate }) {
             name: habit,
             days: selectedDays.map((day) => day.id)
         }
-        console.log(body)
         if (selectedDays.length === 0) {
             alert("Selecione pelo menos um dia")
             return
@@ -41,12 +39,11 @@ export default function Add({ setStart, token, setUpdate }) {
         }
         else {
             api.post(`habits`, body, config)
-                .then(res => {
-                    console.log(`add ${res}`)
+                .then(() => {
                     setStart(false)
                     setUpdate(up=>!up)
                 })
-                .catch(err => console.log(err.response.data))
+                .catch(err => alert(err.response.data))
         }
     }
 
@@ -132,6 +129,7 @@ const Cancelar = styled.div`
     font-size: 15.976px;
     line-height: 20px;
     text-align: center;
+    cursor: pointer;
     color: #52B6FF;
 `
 const Days = styled.div`

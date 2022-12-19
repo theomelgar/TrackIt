@@ -1,11 +1,11 @@
-import Menu from "./Menu";
-import NavBar from "./NavBar"
-import { StyleHabits } from "./StyleHabits";
+import Menu from "../Menu";
+import NavBar from "../NavBar"
+import { StyleHabits } from "../StyleHabits";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { ListContext } from "../context/list";
-import { api } from "../services/auth";
-import CardToday from "./CardToday"
+import { ListContext } from "../../context/list";
+import { api } from "../../services/auth";
+import CardToday from "../CardToday"
 
 export default function Today() {
     const dayjs = require('dayjs')
@@ -20,8 +20,9 @@ export default function Today() {
                 setToday(res.data)
                 calcPercentage(res.data)
             })
-            .catch(err => console.log(err.response.data.message))
+            .catch(err => alert(err.response.data.message))
     }, [update])
+
     const calcPercentage = (data) => {
         const habitsDone = data.filter((t) => t.done);
         const percentageHabitsCompleted = (habitsDone.length / data.length) * 100;
@@ -39,8 +40,9 @@ export default function Today() {
                     {percentage < 1 ? "Nenhum hábito concluído ainda" : `${percentage}% dos hábitos concluídos`}
                 </AlertText>
             </Alert>
-            {today.map((activity) => <CardToday key={activity.id} token={token} activity={activity} setUpdate={setUpdate} />)}
-
+            <Cards>
+                {today.map((activity) => <CardToday key={activity.id} token={token} activity={activity} setUpdate={setUpdate} />)}
+            </Cards>
             <Menu />
         </StyleHabits>
     )
@@ -61,8 +63,17 @@ const Alert = styled.div`
     line-height: 22px;
     color: #666666;
 `
-export const AlertText = styled.p`
+const AlertText = styled.p`
   font-size: 18px;
     line-height: 22px;
     color: ${(props) => (props.switch ? "#8FC549" : "#bababa")};
+`
+const Cards = styled.div`
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 80px;
 `

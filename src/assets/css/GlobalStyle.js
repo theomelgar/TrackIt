@@ -27,6 +27,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background: #F2F2F2;
 }
 ol, ul {
 	list-style: none;
@@ -54,8 +55,9 @@ p{
 }
 button{
   cursor: pointer;
-  :hover {
-    opacity: 0.7;
+  	:hover {
+    	opacity: 0.7;
+	}
 }
 `
 export default GlobalStyle

@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import LogIn from "./LogIn";
-import SignUp from "./SignUp";
-import Habits from "./Habits";
-import Today from "./Today";
-import History from "./History";
+import LogIn from "./pages/LogIn";
+import SignUp from "./pages/SignUp";
+import Habits from "./pages/Habits";
+import Today from "./pages/Today";
+import History from "./pages/History";
 import { ListProvider } from "../context/list";
 
 export default function TrackMain() {

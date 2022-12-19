@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { ListContext } from "../context/list"
 import { dayColors } from "../constants/colors"
 import { confirmAlert } from "react-confirm-alert";
@@ -22,7 +22,7 @@ export default function Habit({ activity,token }) {
                 api
                   .delete(`habits/${id}`, { headers: { Authorization: `Bearer ${token}` } })
                   .then(alert("Persista!"))
-                  .catch((err) => console.log(err));
+                  .catch((err) => alert(err.response.data.message));
               },
             },
             {

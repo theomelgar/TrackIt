@@ -1,12 +1,12 @@
-import NavBar from "./NavBar";
-import { StyleHabits } from "./StyleHabits";
-import Habit from "./Habit";
+import NavBar from "../NavBar";
+import { StyleHabits } from "../StyleHabits";
+import Habit from "../Habit";
 import styled from "styled-components";
-import Menu from "./Menu";
-import Add from "./Add";
+import Menu from "../Menu";
+import Add from "../Add";
 import { useContext, useEffect, useState } from "react";
-import { ListContext } from "../context/list";
-import { api } from "../services/auth";
+import { ListContext } from "../../context/list";
+import { api } from "../../services/auth";
 
 export default function Habits() {
     const [start, setStart] = useState(false)
@@ -19,10 +19,9 @@ export default function Habits() {
             { headers: { Authorization: `Bearer ${token}` } }
         )
             .then(res => {
-                console.log(res.data)
                 setList(res.data)
             })
-            .catch(err => console.log(err.response.data.message))
+            .catch(err => alert(err.response.data.message))
     }, [update])
 
     return (
@@ -33,16 +32,20 @@ export default function Habits() {
                 <div onClick={() => setStart(!start)}>+</div>
             </UserHabits>
             {start && <Add token={token} setStart={setStart} UserData={UserData} setUpdate={setUpdate}></Add>}
-            {list.map((activity) => <Habit key={activity.id} token={token} activity={activity} />)}
-            {list.length===0 && (
+            {list.length === 0 && (
                 <Alert>
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 </Alert>
             )}
-            <Menu></Menu>
+            <HabitList>
+                {list.map((activity) => <Habit key={activity.id} token={token} activity={activity} />)}
+            </HabitList>
+            
+            <Menu />
         </StyleHabits>
     )
 }
+
 const Alert = styled.div`
     width: 90%;
     font-size: 17.976px;
@@ -52,12 +55,12 @@ const Alert = styled.div`
 const UserHabits = styled.div`
     width: 90%;
     height: 70px;
-    margin-top: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 22.976px;
     line-height: 29px;  
+    margin-top: 80px;
     color: #126BA5; 
     div{        
         width: 40px;
@@ -70,4 +73,13 @@ const UserHabits = styled.div`
         line-height: 34px;
         cursor: pointer;
     }
+`
+const HabitList = styled.div`
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 80px;
 `
