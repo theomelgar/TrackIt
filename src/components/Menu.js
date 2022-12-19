@@ -5,7 +5,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import { Link } from "react-router-dom";
 import { ListContext } from "../context/list";
 export default function Menu() {
-    const {percentage} = useContext(ListContext)
+    const { percentage } = useContext(ListContext)
     // const {} = useContext()
     return (
         <StyleMenu>
@@ -27,9 +27,6 @@ export default function Menu() {
                                 strokeLinecap: 'round',
                                 // Customize transition animation
                                 transition: 'stroke-dashoffset 0.5s ease 0s',
-                                // Rotate the path
-                                transform: 'rotate(0.25turn)',
-                                transformOrigin: 'center center',
                             },
                             // Customize the circle behind the path, i.e. the "total progress"
                             trail: {

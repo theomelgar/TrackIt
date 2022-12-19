@@ -13,6 +13,7 @@ export default function Habits() {
     const { UserData } = useContext(ListContext);
     const token = UserData.token
     const [list, setList] = useState([])
+    const [update, setUpdate] = useState(false)
     useEffect(() => {
         api.get(`habits`,
             { headers: { Authorization: `Bearer ${token}` } }
@@ -22,7 +23,7 @@ export default function Habits() {
                 setList(res.data)
             })
             .catch(err => console.log(err.response.data.message))
-    }, [token])
+    }, [update])
 
     return (
         <StyleHabits>
@@ -31,8 +32,8 @@ export default function Habits() {
                 <p>Meus hábitos</p>
                 <div onClick={() => setStart(!start)}>+</div>
             </UserHabits>
-            {start && <Add token={token} setStart={setStart} UserData={UserData}></Add>}
-            {list.map((activity) => <Habit token={token} activity={activity} />)}
+            {start && <Add token={token} setStart={setStart} UserData={UserData} setUpdate={setUpdate}></Add>}
+            {list.map((activity) => <Habit key={activity.id} token={token} activity={activity} />)}
             {list.length===0 && (
                 <Alert>
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
@@ -67,5 +68,6 @@ const UserHabits = styled.div`
         color: white;
         font-size: 26.976px;
         line-height: 34px;
+        cursor: pointer;
     }
 `

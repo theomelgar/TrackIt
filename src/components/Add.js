@@ -4,7 +4,7 @@ import { ListContext } from "../context/list";
 import Day from "./Day";
 import { api } from "../services/auth";
 
-export default function Add({ setStart, token }) {
+export default function Add({ setStart, token, setUpdate }) {
     const { week } = useContext(ListContext)
     const [habit, setHabit] = useState()
     const [selectedDays, setSelectedDays] = useState([])
@@ -44,7 +44,7 @@ export default function Add({ setStart, token }) {
                 .then(res => {
                     console.log(`add ${res}`)
                     setStart(false)
-                    window.refresh()
+                    setUpdate(up=>!up)
                 })
                 .catch(err => console.log(err.response.data))
         }

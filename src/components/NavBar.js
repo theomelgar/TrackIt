@@ -58,7 +58,7 @@ const Sair = styled.div`
     border-radius: 95px;
     text-align: center;
     position: absolute;
-    right: 50%;
-    top: 40%;
+    right: 48.5%;
+    top: 35%;
     color: #126BA5;
 `

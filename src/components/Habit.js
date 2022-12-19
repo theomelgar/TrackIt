@@ -8,18 +8,19 @@ import { api } from "../services/auth";
 
 export default function Habit({ activity,token }) {
     const { week } = useContext(ListContext)
+    const {id, name, days} = activity
     let status = 'available'
 
     const deleteHabit = () => {
         confirmAlert({
-          title: "Reflexão",
+          title: "Reflita",
           message: "Isso iria deixar você orgulhoso amanhâ?",
           buttons: [
             {
               label: "Sim",
               onClick: () => {
                 api
-                  .delete(`habits/${activity.id}`, { headers: { Authorization: `Bearer ${token}` } })
+                  .delete(`habits/${id}`, { headers: { Authorization: `Bearer ${token}` } })
                   .then(alert("Persista!"))
                   .catch((err) => console.log(err));
               },
@@ -33,14 +34,14 @@ export default function Habit({ activity,token }) {
 
     return (
         <StyleHabit>
-            <p>{activity.name}</p>
-            <div onClick={()=>deleteHabit}>
+            <p>{name}</p>
+            <div onClick={deleteHabit}>
                 <ion-icon name="trash-outline"></ion-icon>
             </div>
             <Days>
                 {week.map((d, i) => (
                     <Day key={i} status={
-                        activity.days.includes(i) ?
+                        days.includes(i) ?
                             (status = 'selected')
                             : (status = "available")}>
                         {d.name[0]}
@@ -77,6 +78,7 @@ const StyleHabit = styled.div`
     }
     ion-icon{
         padding: 7px 10px;
+        cursor: pointer;
     }
 `
 const Day = styled.div`

@@ -2,9 +2,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import { api } from "../services/auth";
 
-export default function CardToday({ activity, token }) {
+export default function CardToday({ activity, token, setUpdate }) {
     const [click, setClick] = useState(true)
-    const [times, setTimes] = useState(0)
+    const {id, name, currentSequence, highestSequence, done} = activity
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
@@ -12,32 +12,32 @@ export default function CardToday({ activity, token }) {
     }
     function check() {
         api
-            .post(`habits/${activity.id}/check`, {}, config)
+            .post(`habits/${id}/check`, {}, config)
             .then(() => {
                 setClick(!click)
-                setTimes(times + 1)
+                setUpdate(up=>!up)
             }
             )
             .catch(err => console.log(err.response.data.message))
     }
     function unCheck() {
         api
-            .post(`habits/${activity.id}/uncheck`, {}, config)
+            .post(`habits/${id}/uncheck`, {}, config)
             .then(() => {
                 setClick(!click)
-                setTimes(times - 1)
+                setUpdate(up=>!up)
             }
             )
             .catch(err => console.log(err.response.data.message))
     }
     return (
         <StyleToday>
-            <p>{activity.name}</p>
+            <p>{name}</p>
             <Streak>
-                <p>Sequência atual:{times}</p>
-                <p>Seu recorde:{times}</p>
+                <p>Sequência atual:{currentSequence}</p>
+                <p>Seu recorde:{highestSequence}</p>
             </Streak>
-            {!activity.done ? (
+            {!done ? (
                 <Check onClick={check} cor="#EBEBEB">
                     <ion-icon name="checkmark-sharp"></ion-icon>
                 </Check>) :
