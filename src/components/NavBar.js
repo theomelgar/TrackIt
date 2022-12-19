@@ -1,12 +1,23 @@
 import styled from "styled-components"
 import { useContext } from "react"
-import { ImageContext } from "../context/image"
-export default function NavBar(){
-    const {info} = useContext(ImageContext)
-    return(
+import { ListContext } from "../context/list";
+import { useNavigate } from "react-router-dom";
+
+export default function NavBar() {
+    const { UserData, setUserData } = useContext(ListContext);
+    const navigate = useNavigate()
+    const signout = () => {
+        localStorage.clear()
+        setUserData({})
+        navigate('/')
+    }
+    return (
         <NavStyle>
             <h1>TrackIt</h1>
-            <img src={info.image} alt='icone'/>
+            <img src={UserData.image} alt='icone' />
+            <Sair onClick={signout}>
+                <p>Sair</p>
+            </Sair>
         </NavStyle>
     )
 }
@@ -34,8 +45,20 @@ const NavStyle = styled.div`
         position: absolute;
         width: 51px;
         height: 51px;
-        right: 25px;
-        top: 9px;
+        right: 15px;
+        top: 10%;
         border-radius: 98.5px;
     }
+`
+const Sair = styled.div`
+    cursor: pointer;
+    width: 50px;
+    font-size: 20px;
+    background-color: aliceblue;
+    border-radius: 95px;
+    text-align: center;
+    position: absolute;
+    right: 50%;
+    top: 40%;
+    color: #126BA5;
 `

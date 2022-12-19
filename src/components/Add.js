@@ -1,11 +1,8 @@
 import { useContext, useState } from "react"
 import styled from "styled-components"
 import { ListContext } from "../context/list";
-import { dayColors } from "../constants/colors";
-import { useEffect } from "react";
 import Day from "./Day";
-import { BASE_URL } from "../constants/urls";
-import axios from "axios";
+import { api } from "../services/auth";
 
 export default function Add({ setStart, token }) {
     const { week } = useContext(ListContext)
@@ -43,7 +40,7 @@ export default function Add({ setStart, token }) {
             return
         }
         else {
-            axios.post(`${BASE_URL}habits`, body, config)
+            api.post(`habits`, body, config)
                 .then(res => {
                     console.log(`add ${res}`)
                     setStart(false)

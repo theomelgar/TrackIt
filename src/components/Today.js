@@ -1,15 +1,31 @@
 import Menu from "./Menu";
 import NavBar from "./NavBar"
 import { StyleHabits } from "./StyleHabits";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { ListContext } from "../context/list";
+import { api } from "../services/auth";
+import CardToday from "./CardToday"
 
 export default function Today() {
     const dayjs = require('dayjs')
-    const { week, empty } = useContext(ListContext)
+    const { week,setPercentage,UserData } = useContext(ListContext)
+    const token = UserData.token
+    const [today, setToday] = useState([])
     //import dayjs from 'dayjs' // ES 2015
-    console.log(week)
+    useEffect(() => {
+        api.get(`habits/today`, { headers: { Authorization: `Bearer ${token}` } })
+            .then(res => {
+                setToday(res.data)
+                calcPercentage(res.data)
+            })
+            .catch(err => console.log(err.response.data.message))
+    }, [token])
+    const calcPercentage = (data) => {
+        const habitsDone = data.filter((t) => t.done);
+        const percentageHabitsCompleted = (habitsDone.length / data.length) * 100;
+        setPercentage(percentageHabitsCompleted.toFixed());
+      };
     return (
         <StyleHabits>
             <NavBar />
@@ -17,14 +33,13 @@ export default function Today() {
                 <p>{week[dayjs().day()].name
                 }, {dayjs().date()}/{dayjs().month() + 1}</p>
             </Date>
-            {empty ? (
+            {today.length===0 && (
                 <Alert>
                     <p>Nenhum hábito concluído ainda</p>
                 </Alert>
-            ) :
-                <Habit>
-                </Habit>
-            }
+            )}
+            {today.map((activity) => <CardToday token={token} activity={activity} />)}
+            
             <Menu />
         </StyleHabits>
     )
@@ -40,8 +55,6 @@ const Date = styled.div`
     color: #126BA5; 
 `
 
-const Habit = styled.div`
-`
 const Alert = styled.div`
     width: 90%;
     font-size: 17.976px;

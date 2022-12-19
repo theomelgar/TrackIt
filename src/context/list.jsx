@@ -1,5 +1,5 @@
 import { useState, createContext } from "react";
-
+import useStickyState from "../hooks/index.js"
 export const ListContext = createContext()
 
 export const ListProvider = ({children})=>{
@@ -13,9 +13,10 @@ export const ListProvider = ({children})=>{
     {id:5, name:"Sexta", isAvailable:true},
     {id:6, name:"Sábado", isAvailable:true}]
     const [days, setDays] = ([])
-    const [empty, setEmpty] = useState(true)
+    const [percentage, setPercentage] = useState(0)
+    const [UserData, setUserData] = useStickyState({}, "userData")
     return(
-        <ListContext.Provider value={{ list, setList, empty, setEmpty, days,setDays, week}}>
+        <ListContext.Provider value={{ list, setList, percentage, setPercentage, days,setDays, week, UserData, setUserData}}>
             {children}
         </ListContext.Provider>
     )

@@ -6,17 +6,15 @@ import Menu from "./Menu";
 import Add from "./Add";
 import { useContext, useEffect, useState } from "react";
 import { ListContext } from "../context/list";
-import axios from "axios";
-import { BASE_URL } from "../constants/urls";
-import { ImageContext } from "../context/image";
-import { confirmAlert } from "react-confirm-alert";
+import { api } from "../services/auth";
 
 export default function Habits() {
     const [start, setStart] = useState(false)
-    const { info, token } = useContext(ImageContext)
+    const { UserData } = useContext(ListContext);
+    const token = UserData.token
     const [list, setList] = useState([])
     useEffect(() => {
-        axios.get(`${BASE_URL}habits`,
+        api.get(`habits`,
             { headers: { Authorization: `Bearer ${token}` } }
         )
             .then(res => {
@@ -33,9 +31,9 @@ export default function Habits() {
                 <p>Meus hábitos</p>
                 <div onClick={() => setStart(!start)}>+</div>
             </UserHabits>
-            {start && <Add token={token} setStart={setStart} info={info}></Add>}
+            {start && <Add token={token} setStart={setStart} UserData={UserData}></Add>}
             {list.map((activity) => <Habit token={token} activity={activity} />)}
-            {list.length==0 && (
+            {list.length===0 && (
                 <Alert>
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 </Alert>

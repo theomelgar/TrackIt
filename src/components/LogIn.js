@@ -1,18 +1,18 @@
 import logo from "../assets/img/logo.png"
 import StyleLogin from "./StyleLogin"
 import { Link, useNavigate } from "react-router-dom"
-import { BASE_URL } from "../constants/urls"
 import { useState, useContext } from "react"
 import Loading from "./Loading"
-import axios from "axios"
-import { ImageContext } from "../context/image"
+import { api } from "../services/auth"
+import { ListContext } from "../context/list"
 
 export default function LogIn() {
-    const { setInfo } = useContext(ImageContext)
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
     const [load, setLoad] = useState("Entrar")
     const [off, setOff] = useState(false)
+    const { setUserData } = useContext(ListContext);
+
     const navigate = useNavigate()
 
     function send(e) {
@@ -22,13 +22,13 @@ export default function LogIn() {
             email: email,
             password: password
         };
-        axios
+        api
             .post(
-                `${BASE_URL}auth/login`,
+                `auth/login`,
                 Login
             )
             .then((response) => {
-                setInfo(response.data)
+                setUserData(response.data)
                 navigate("/habitos")
                 setLoad("Entrar")
                 setOff(false)

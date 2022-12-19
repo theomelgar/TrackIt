@@ -1,12 +1,12 @@
 import styled from "styled-components"
 import { useContext } from "react"
-import { ImageContext } from "../context/image"
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
 import { Link } from "react-router-dom";
+import { ListContext } from "../context/list";
 export default function Menu() {
+    const {percentage} = useContext(ListContext)
     // const {} = useContext()
-    const percentage = 66;
     return (
         <StyleMenu>
             <div style={{ width: 91, height: 91 }}>

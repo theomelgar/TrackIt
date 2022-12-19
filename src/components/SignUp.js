@@ -1,8 +1,7 @@
 import StyleLogin from "./StyleLogin"
 import logo from "../assets/img/logo.png"
 import { Link, useNavigate } from "react-router-dom"
-import { BASE_URL } from "../constants/urls"
-import axios from "axios"
+import { api } from "../services/auth"
 import { useState } from "react"
 import Loading from "./Loading"
 
@@ -23,9 +22,9 @@ export default function SignUp() {
             image: photo,
             password: password
         };
-        axios
+        api
             .post(
-                `${BASE_URL}auth/sign-up`,
+                `auth/sign-up`,
                 Login
             )
             .then(() => {

@@ -4,8 +4,7 @@ import { ListContext } from "../context/list"
 import { dayColors } from "../constants/colors"
 import { confirmAlert } from "react-confirm-alert";
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import axios from "axios";
-import { BASE_URL } from "../constants/urls";
+import { api } from "../services/auth";
 
 export default function Habit({ activity,token }) {
     const { week } = useContext(ListContext)
@@ -19,8 +18,8 @@ export default function Habit({ activity,token }) {
             {
               label: "Sim",
               onClick: () => {
-                axios
-                  .delete(`${BASE_URL}habits/${activity.id}`, { headers: { Authorization: `Bearer ${token}` } })
+                api
+                  .delete(`habits/${activity.id}`, { headers: { Authorization: `Bearer ${token}` } })
                   .then(alert("Persista!"))
                   .catch((err) => console.log(err));
               },
