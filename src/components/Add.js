@@ -10,6 +10,8 @@ export default function Add({ setStart, token, setUpdate }) {
     const [habit, setHabit] = useState()
     const [selectedDays, setSelectedDays] = useState([])
     const [load, setLoad] = useState("Salvar")
+    const [off, setOff] = useState(false)
+
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
@@ -46,10 +48,12 @@ export default function Add({ setStart, token, setUpdate }) {
                     setStart(false)
                     setUpdate(up => !up)
                     setLoad("Salvar")
+                    setOff(false)
                 })
                 .catch(err => {
                     alert(err.response.data)
                     setLoad("Salvar")
+                    setOff(false)
                 })
         }
     }
@@ -61,6 +65,7 @@ export default function Add({ setStart, token, setUpdate }) {
                 placeholder="nome do hábito"
                 onChange={(e) => setHabit(e.target.value)}
                 value={habit}
+                disabled={off}
             />
             <Days>
                 {week.map((day) => (
@@ -72,7 +77,11 @@ export default function Add({ setStart, token, setUpdate }) {
                     />
                 ))}
             </Days>
-            <Salvar onClick={add}>{load}</Salvar>
+            <Salvar onClick={() => {
+                add()
+                setLoad(Loading)
+                setOff(true)
+            }}>{load}</Salvar>
             <Cancelar onClick={() => setStart(false)}>Cancelar</Cancelar>
         </StyleAdd>
     )
