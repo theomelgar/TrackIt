@@ -3,7 +3,7 @@ import NavBar from "../NavBar"
 import { StyleHabits } from "../StyleHabits";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { ListContext } from "../../context/list";
+import { InfoContext } from "../../context/info";
 import { api } from "../../services/auth"
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
@@ -11,12 +11,13 @@ import 'react-calendar/dist/Calendar.css';
 export default function History() {
     const dayjs = require('dayjs')
     const [empty, setEmpty] = useState(true)
-    const { UserData } = useContext(ListContext)
+    const { UserData } = useContext(InfoContext)
     const [historyData, setHistoryData] = useState([])
     const token = UserData.token
-    const [value, onChange] = useState(new Date());
+    const [value] = useState(new Date());
     const [visible, setVisible] = useState(false)
-    const [result, setResult] = useState()
+    const [result, setResult] = useState([])
+    const dates = historyData.map((item) => item.day)
     useEffect(() => {
         api
             .get("habits/history/daily", { headers: { Authorization: `Bearer ${token}` } })
@@ -24,22 +25,23 @@ export default function History() {
                 setHistoryData(res.data)
                 setEmpty(false)
             })
-            .catch((err) => console.log(err.response.data.message))
-    }, [])
+            .catch((err) => alert(err.response.data.message))
+    }, [token])
 
     function appear(value) {
         const dateFormat = dayjs(value).locale("pt-br").format("DD/MM/YYYY");
-        (historyData.map((h) =>
-            (h.day === dateFormat) && (setVisible(!visible))
-        ))
+        if (dates.includes(dateFormat)) {
+            setVisible(true)
+        }else setVisible(false)
     }
+
 
     function handleClickDay(value) {
         const dateFormat = dayjs(value).locale("pt-br").format("DD/MM/YYYY");
         (historyData.map((h) =>
             (h.day === dateFormat) && (
                 setResult(h.habits.map((l) =>
-                    `${l.name}: ${l.done === true ? "Feito" : "Não Feito"}`
+                    `${l.name} - ${l.done === true ? "✅" : "❌"}`
 
                 )))
         ))
@@ -62,7 +64,6 @@ export default function History() {
 
         return day;
     }
-    console.log(result)
     return (
         <StyleHabits>
             <NavBar />
@@ -83,39 +84,47 @@ export default function History() {
                         }}
                         formatDay={(locale, date) => formatDate(date)} />
                     <Menu />
-                    {!visible && 
+                    {visible &&
                         <List>
                             {result.map((l) =>
-                                <div>
+                                <div key={l}>
                                     <p>{l}</p>
                                 </div>
                             )}
-                            <button onClick={() => setVisible(false)}>x</button>
+                            <button onClick={() => setVisible(false)}>X</button>
                         </List>
                     }
                 </StyleCalendar>
             )}
+            <Menu/>
         </StyleHabits>
     )
 }
 const List = styled.div`
     position: absolute;
     width: 100%;
-    
-    top: 40px;
+    top: -50px;
     left: 0;
-    background-color:#087ba8;
+    background-color:#d3e9f3;
     display: flex;
     flex-direction: column;
     justify-content: center;
-        align-items: center;
+    align-items: center;
     flex-wrap: wrap;
     text-align: center;
-    border-radius:3%;
+    border-radius:9px;
+    border: 1px black solid;
+    gap: 10px;
+    div{
+        margin: 2px;
+    }
+    button{
+        margin-bottom: 10px;
+    }
 `
 const Title = styled.div`
     width: 90%;
-    height: 70px;
+    height: 30px;
     margin-top: 100px;
     display: flex;
     justify-content: space-between;
@@ -137,6 +146,7 @@ const StyleCalendar = styled.div`
     }
     .react-calendar__tile--now{
         background-color: yellow;
+        color: black;
     }
     .react-calendar__month-view__days {
         display: flex;

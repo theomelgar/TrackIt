@@ -4,30 +4,33 @@ import { StyleHabits } from "../StyleHabits";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { ListContext } from "../../context/list";
+import { InfoContext } from "../../context/info";
 import { api } from "../../services/auth";
 import CardToday from "../CardToday"
 
 export default function Today() {
     const dayjs = require('dayjs')
-    const { week, setPercentage, UserData, percentage } = useContext(ListContext)
+    const {UserData} = useContext(InfoContext)
+    const { week, setPercentage, percentage } = useContext(ListContext)
     const [update, setUpdate] = useState(true)
     const token = UserData.token
     const [today, setToday] = useState([])
-    //import dayjs from 'dayjs' // ES 2015
+    
     useEffect(() => {
+        const calcPercentage = (data) => {
+            const habitsDone = data.filter((t) => t.done);
+            const percentageHabitsCompleted = (habitsDone.length / data.length) * 100;
+            setPercentage(percentageHabitsCompleted.toFixed());
+        };
         api.get(`habits/today`, { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 setToday(res.data)
                 calcPercentage(res.data)
             })
             .catch(err => alert(err.response.data.message))
-    }, [update])
+    }, [update,token,setPercentage])
 
-    const calcPercentage = (data) => {
-        const habitsDone = data.filter((t) => t.done);
-        const percentageHabitsCompleted = (habitsDone.length / data.length) * 100;
-        setPercentage(percentageHabitsCompleted.toFixed());
-    };
+    
     return (
         <StyleHabits>
             <NavBar />

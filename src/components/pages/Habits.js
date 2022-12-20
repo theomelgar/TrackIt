@@ -5,12 +5,12 @@ import styled from "styled-components";
 import Menu from "../Menu";
 import Add from "../Add";
 import { useContext, useEffect, useState } from "react";
-import { ListContext } from "../../context/list";
+import { InfoContext } from "../../context/info";
 import { api } from "../../services/auth";
 
 export default function Habits() {
     const [start, setStart] = useState(false)
-    const { UserData } = useContext(ListContext);
+    const { UserData } = useContext(InfoContext);
     const token = UserData.token
     const [list, setList] = useState([])
     const [update, setUpdate] = useState(false)
@@ -22,7 +22,7 @@ export default function Habits() {
                 setList(res.data)
             })
             .catch(err => alert(err.response.data.message))
-    }, [update])
+    }, [update,token])
     return (
         <StyleHabits>
             <NavBar />
@@ -80,5 +80,5 @@ const HabitList = styled.div`
     justify-content: center;
     align-items: center;
     gap: 10px;
-    margin-bottom: 80px;
+    margin-bottom: 100px;
 `

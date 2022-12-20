@@ -2,9 +2,11 @@ import styled from "styled-components"
 import { useContext } from "react"
 import { ListContext } from "../context/list";
 import { useNavigate } from "react-router-dom";
+import { InfoContext } from "../context/info";
 
 export default function NavBar() {
-    const { UserData, setUserData } = useContext(ListContext);
+    const { setUserData } = useContext(ListContext);
+    const { UserData } = useContext(InfoContext);
     const navigate = useNavigate()
     const signout = () => {
         localStorage.clear()
@@ -16,6 +18,7 @@ export default function NavBar() {
             <h1>TrackIt</h1>
             <img src={UserData.image} alt='icone' />
             <Sair onClick={signout}>
+            <ion-icon name="log-out-outline"/>
                 <p>Sair</p>
             </Sair>
         </NavStyle>
@@ -52,13 +55,16 @@ const NavStyle = styled.div`
 `
 const Sair = styled.div`
     cursor: pointer;
-    width: 50px;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 20px;
     background-color: aliceblue;
     border-radius: 95px;
     text-align: center;
     position: absolute;
-    right: 48.5%;
+    right: 100px;
     top: 35%;
     color: #126BA5;
 `

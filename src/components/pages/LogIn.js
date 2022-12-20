@@ -4,14 +4,14 @@ import { Link, useNavigate } from "react-router-dom"
 import { useState, useContext } from "react"
 import Loading from "../Loading"
 import { api } from "../../services/auth"
-import { ListContext } from "../../context/list"
+import { InfoContext } from "../../context/info"
 
 export default function LogIn() {
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
     const [load, setLoad] = useState("Entrar")
     const [off, setOff] = useState(false)
-    const { setUserData } = useContext(ListContext);
+    const { setUserData } = useContext(InfoContext);
 
     const navigate = useNavigate()
 
