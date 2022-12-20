@@ -59,5 +59,8 @@ button{
     	opacity: 0.7;
 	}
 }
+.react-confirm-alert-body{
+	width: fit-content;
+}
 `
 export default GlobalStyle

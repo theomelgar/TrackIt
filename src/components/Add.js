@@ -3,11 +3,13 @@ import styled from "styled-components"
 import { ListContext } from "../context/list";
 import Day from "./Day";
 import { api } from "../services/auth";
+import Loading from "./Loading";
 
 export default function Add({ setStart, token, setUpdate }) {
     const { week } = useContext(ListContext)
     const [habit, setHabit] = useState()
     const [selectedDays, setSelectedDays] = useState([])
+    const [load, setLoad] = useState("Salvar")
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
@@ -25,6 +27,7 @@ export default function Add({ setStart, token, setUpdate }) {
     }
 
     function add() {
+        setLoad(Loading)
         const body = {
             name: habit,
             days: selectedDays.map((day) => day.id)
@@ -41,9 +44,13 @@ export default function Add({ setStart, token, setUpdate }) {
             api.post(`habits`, body, config)
                 .then(() => {
                     setStart(false)
-                    setUpdate(up=>!up)
+                    setUpdate(up => !up)
+                    setLoad("Salvar")
                 })
-                .catch(err => alert(err.response.data))
+                .catch(err => {
+                    alert(err.response.data)
+                    setLoad("Salvar")
+                })
         }
     }
 
@@ -65,7 +72,7 @@ export default function Add({ setStart, token, setUpdate }) {
                     />
                 ))}
             </Days>
-            <Salvar onClick={add}>Salvar</Salvar>
+            <Salvar onClick={add}>{load}</Salvar>
             <Cancelar onClick={() => setStart(false)}>Cancelar</Cancelar>
         </StyleAdd>
     )
@@ -111,6 +118,10 @@ const Salvar = styled.button`
     font-size: 15.976px;
     line-height: 20px;
     color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     &:hover{
         cursor: pointer;
     }

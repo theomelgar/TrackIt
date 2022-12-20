@@ -3,7 +3,6 @@ import useStickyState from "../hooks/index.js"
 export const ListContext = createContext()
 
 export const ListProvider = ({children})=>{
-    const [list, setList] = useState([])
     const week=[
     {id:0, name:"Domingo", isAvailable:true},
     {id:1, name:"Segunda", isAvailable:true},
@@ -16,7 +15,7 @@ export const ListProvider = ({children})=>{
     const [percentage, setPercentage] = useState(0)
     const [UserData, setUserData] = useStickyState({}, "userData")
     return(
-        <ListContext.Provider value={{ list, setList, percentage, setPercentage, days,setDays, week, UserData, setUserData}}>
+        <ListContext.Provider value={{ percentage, setPercentage, days,setDays, week, UserData, setUserData}}>
             {children}
         </ListContext.Provider>
     )

@@ -69,7 +69,7 @@ const AlertText = styled.p`
     color: ${(props) => (props.switch ? "#8FC549" : "#bababa")};
 `
 const Cards = styled.div`
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;

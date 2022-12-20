@@ -1,36 +1,36 @@
 import styled from "styled-components"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { ListContext } from "../context/list"
 import { dayColors } from "../constants/colors"
 import { confirmAlert } from "react-confirm-alert";
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { api } from "../services/auth";
 
-export default function Habit({ activity,token }) {
+export default function Habit({ activity, token }) {
     const { week } = useContext(ListContext)
-    const {id, name, days} = activity
+    const { id, name, days } = activity
     let status = 'available'
 
     const deleteHabit = () => {
         confirmAlert({
-          title: "Reflita",
-          message: "Isso iria deixar você orgulhoso amanhâ?",
-          buttons: [
-            {
-              label: "Sim",
-              onClick: () => {
-                api
-                  .delete(`habits/${id}`, { headers: { Authorization: `Bearer ${token}` } })
-                  .then(alert("Persista!"))
-                  .catch((err) => alert(err.response.data.message));
-              },
-            },
-            {
-              label: "Não",
-            },
-          ],
+            title: "Reflita",
+            message: "Isso iria deixar você orgulhoso amanhâ?",
+            buttons: [
+                {
+                    label: "Sim",
+                    onClick: () => {
+                        api
+                            .delete(`habits/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+                            .then(()=>window.location.reload())
+                            .catch((err) => alert(err.response.data.message));
+                    },
+                },
+                {
+                    label: "Não",
+                },
+            ],
         });
-      };
+    };
 
     return (
         <StyleHabit>
@@ -40,10 +40,11 @@ export default function Habit({ activity,token }) {
             </div>
             <Days>
                 {week.map((d, i) => (
-                    <Day key={i} status={
-                        days.includes(i) ?
-                            (status = 'selected')
-                            : (status = "available")}>
+                    <Day key={i} 
+                        status={
+                            days.includes(i) ?
+                                (status = 'selected')
+                                : (status = "available")}>
                         {d.name[0]}
                     </Day>
                 ))}
@@ -52,6 +53,8 @@ export default function Habit({ activity,token }) {
     )
 
 }
+
+
 const Days = styled.div`
     display: flex;
     justify-content: flex-start;

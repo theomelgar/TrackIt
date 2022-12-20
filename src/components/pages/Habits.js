@@ -23,7 +23,6 @@ export default function Habits() {
             })
             .catch(err => alert(err.response.data.message))
     }, [update])
-
     return (
         <StyleHabits>
             <NavBar />
@@ -40,7 +39,7 @@ export default function Habits() {
             <HabitList>
                 {list.map((activity) => <Habit key={activity.id} token={token} activity={activity} />)}
             </HabitList>
-            
+
             <Menu />
         </StyleHabits>
     )
@@ -75,7 +74,7 @@ const UserHabits = styled.div`
     }
 `
 const HabitList = styled.div`
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
