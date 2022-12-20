@@ -30,12 +30,14 @@ export default function CardToday({ activity, token, setUpdate }) {
             )
             .catch(err => alert(err.response.data.message))
     }
+    
     return (
         <StyleToday data-test="today-habit-container">
             <p data-test="today-habit-name">{name}</p>
-            <Streak>
-                <p data-test="today-habit-sequence">Sequência atual:{currentSequence}</p>
-                <p data-test="today-habit-record">Seu recorde:{highestSequence}</p>
+            
+            <Streak color={currentSequence === highestSequence ? "#8FC549" : "#666666"}>
+                <p data-test="today-habit-sequence" >Sequência atual:<span>{currentSequence} dias</span> </p>
+                <p data-test="today-habit-record">Seu recorde:<span>{highestSequence} dias</span> </p>
             </Streak>
             {!done ? (
                 <Check data-test="today-habit-check-btn" onClick={check} cor="#EBEBEB">
@@ -68,6 +70,8 @@ const StyleToday = styled.div`
 const Streak = styled.div`
     font-size: 12.976px;
     line-height: 16px;
+    span{
+        color: ${props => props.color}}
 `
 const Check = styled.div`
     box-sizing: border-box;
