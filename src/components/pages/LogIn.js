@@ -49,6 +49,7 @@ export default function LogIn() {
             <form onSubmit={send}>
                 <label for="email" />
                 <input
+                    data-test="email-input"
                     type="email"
                     id="emal"
                     placeholder="email"
@@ -59,6 +60,7 @@ export default function LogIn() {
                 />
                 <label for="password" />
                 <input
+                    data-test="password-input"
                     type="password"
                     id="password"
                     placeholder="senha"
@@ -67,12 +69,12 @@ export default function LogIn() {
                     disabled={off}
                     onChange={e => setPassword(e.target.value)}
                 />
-                <button type="submit" onClick={() => {
+                <button data-test="login-btn" type="submit" onClick={() => {
                     setLoad(Loading)
                     setOff(true)
                 }}>{load}</button>
             </form>
-            <Link to="/cadastro">
+            <Link to="/cadastro" data-test="signup-link">
                 <p>Não tem uma conta? Cadastre-se!</p>
             </Link>
         </StyleLogin>

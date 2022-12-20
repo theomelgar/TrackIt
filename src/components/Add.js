@@ -59,8 +59,9 @@ export default function Add({ setStart, token, setUpdate }) {
     }
 
     return (
-        <StyleAdd>
+        <StyleAdd data-test="habit-create-container">
             <input
+                data-test="habit-name-input"
                 type="text"
                 placeholder="nome do hábito"
                 onChange={(e) => setHabit(e.target.value)}
@@ -77,12 +78,12 @@ export default function Add({ setStart, token, setUpdate }) {
                     />
                 ))}
             </Days>
-            <Salvar onClick={() => {
+            <Salvar data-test="habit-create-save-btn" onClick={() => {
                 add()
                 setLoad(Loading)
                 setOff(true)
             }}>{load}</Salvar>
-            <Cancelar onClick={() => setStart(false)}>Cancelar</Cancelar>
+            <Cancelar data-test="habit-create-cancel-btn" onClick={() => setStart(false)}>Cancelar</Cancelar>
         </StyleAdd>
     )
 }

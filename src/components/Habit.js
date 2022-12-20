@@ -21,7 +21,7 @@ export default function Habit({ activity, token }) {
                     onClick: () => {
                         api
                             .delete(`habits/${id}`, { headers: { Authorization: `Bearer ${token}` } })
-                            .then(()=>window.location.reload())
+                            .then(() => window.location.reload())
                             .catch((err) => alert(err.response.data.message));
                     },
                 },
@@ -33,14 +33,16 @@ export default function Habit({ activity, token }) {
     };
 
     return (
-        <StyleHabit>
-            <p>{name}</p>
-            <div onClick={deleteHabit}>
+        <StyleHabit data-test="habit-container">
+            <p data-test="habit-name">{name}</p>
+            <div data-test="habit-delete-btn" onClick={deleteHabit}>
                 <ion-icon name="trash-outline"></ion-icon>
             </div>
             <Days>
                 {week.map((d, i) => (
-                    <Day key={i} 
+                    <Day
+                        data-test="habit-day"
+                        key={i}
                         status={
                             days.includes(i) ?
                                 (status = 'selected')

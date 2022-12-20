@@ -9,12 +9,13 @@ export default function Day({ day, handleDay, isSelected }) {
             setStatus("selected")
         } else if (day.isAvailable) {
             setStatus("available")
-        } 
-    }, [isSelected,day.isAvailable])
+        }
+    }, [isSelected, day.isAvailable])
 
     return (
-        <DayItem 
-            status={status} 
+        <DayItem
+            data-test="habit-day"
+            status={status}
             onClick={() => handleDay(day)}>
             {day.name[0]}
         </DayItem>

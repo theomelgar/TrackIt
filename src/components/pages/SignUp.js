@@ -43,6 +43,7 @@ export default function SignUp() {
             <img src={logo} alt="TrackIt" />
             <form onSubmit={send}>
                 <input
+                    data-test="email-input"
                     type="email"
                     id="emal"
                     disabled={off}
@@ -52,6 +53,7 @@ export default function SignUp() {
                     onChange={e => setEmail(e.target.value)}
                 />
                 <input
+                    data-test="password-input"
                     type="password"
                     id="password"
                     disabled={off}
@@ -61,6 +63,7 @@ export default function SignUp() {
                     onChange={e => setPassword(e.target.value)}
                 />
                 <input
+                data-test="user-name-input"
                     type="text"
                     id="name"
                     disabled={off}
@@ -70,6 +73,7 @@ export default function SignUp() {
                     onChange={e => setName(e.target.value)}
                 />
                 <input
+                data-test="user-image-input"
                     type="url"
                     id="photo"
                     disabled={off}
@@ -78,12 +82,12 @@ export default function SignUp() {
                     required
                     onChange={e => setPhoto(e.target.value)}
                 />
-                <button type="submit" onClick={() => {
+                <button data-test="signup-btn" type="submit" onClick={() => {
                     setLoad(Loading)
                     setOff(true)
                 }}>{load}</button>
             </form>
-            <Link to="/">
+            <Link to="/" data-test="login-link">
                 <p>Já tem uma conta? Faça login!</p>
             </Link>
         </StyleLogin>

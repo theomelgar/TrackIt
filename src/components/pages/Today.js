@@ -35,11 +35,11 @@ export default function Today() {
         <StyleHabits>
             <NavBar />
             <Date>
-                <p>{week[dayjs().day()].name
+                <p data-test="today">{week[dayjs().day()].name
                 }, {dayjs().date()}/{dayjs().month() + 1}</p>
             </Date>
             <Alert>
-                <AlertText switch={percentage < 1 ? false : true}>
+                <AlertText data-test="today-counter" switch={percentage < 1 ? false : true}>
                     {percentage < 1 ? "Nenhum hábito concluído ainda" : `${percentage}% dos hábitos concluídos`}
                 </AlertText>
             </Alert>

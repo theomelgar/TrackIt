@@ -7,9 +7,9 @@ import { ListContext } from "../context/list";
 export default function Menu() {
     const { percentage } = useContext(ListContext)
     return (
-        <StyleMenu>
+        <StyleMenu data-test="menu">
             <div style={{ width: 91, height: 91 }}>
-                <Link to={"/hoje"}>
+                <Link to={"/hoje"} data-test="today-link">
                     <CircularProgressbar
                         value={percentage}
                         text="Hoje"
@@ -52,10 +52,10 @@ export default function Menu() {
                     />
                 </Link>
             </div>
-            <Link to={"/habitos"}>
+            <Link to={"/habitos"} data-test="habit-link">
                 <p>Hábitos</p>
             </Link>
-            <Link to={"/historico"}>
+            <Link to={"/historico"} data-test="history-link">
                 <p>Histórico</p>
             </Link>
         </StyleMenu>

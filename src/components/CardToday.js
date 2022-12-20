@@ -4,7 +4,7 @@ import { api } from "../services/auth";
 
 export default function CardToday({ activity, token, setUpdate }) {
     const [click, setClick] = useState(true)
-    const {id, name, currentSequence, highestSequence, done} = activity
+    const { id, name, currentSequence, highestSequence, done } = activity
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
@@ -15,7 +15,7 @@ export default function CardToday({ activity, token, setUpdate }) {
             .post(`habits/${id}/check`, {}, config)
             .then(() => {
                 setClick(!click)
-                setUpdate(up=>!up)
+                setUpdate(up => !up)
             }
             )
             .catch(err => alert(err.response.data.message))
@@ -25,23 +25,23 @@ export default function CardToday({ activity, token, setUpdate }) {
             .post(`habits/${id}/uncheck`, {}, config)
             .then(() => {
                 setClick(!click)
-                setUpdate(up=>!up)
+                setUpdate(up => !up)
             }
             )
             .catch(err => alert(err.response.data.message))
     }
     return (
-        <StyleToday>
-            <p>{name}</p>
+        <StyleToday data-test="today-habit-container">
+            <p data-test="today-habit-name">{name}</p>
             <Streak>
-                <p>Sequência atual:{currentSequence}</p>
-                <p>Seu recorde:{highestSequence}</p>
+                <p data-test="today-habit-sequence">Sequência atual:{currentSequence}</p>
+                <p data-test="today-habit-record">Seu recorde:{highestSequence}</p>
             </Streak>
             {!done ? (
-                <Check onClick={check} cor="#EBEBEB">
+                <Check data-test="today-habit-check-btn" onClick={check} cor="#EBEBEB">
                     <ion-icon name="checkmark-sharp"></ion-icon>
                 </Check>) :
-                (<Check onClick={unCheck} cor="#8FC549">
+                (<Check data-test="today-habit-check-btn" onClick={unCheck} cor="#8FC549">
                     <ion-icon name="checkmark-sharp"></ion-icon>
                 </Check>)}
         </StyleToday>

@@ -74,7 +74,7 @@ export default function History() {
                 </Alert>
             ) : (
                 <StyleCalendar>
-                    <Calendar
+                    <Calendar data-test="calendar"
                         locale="pt-BR"
                         calendarType="US"
                         value={value}

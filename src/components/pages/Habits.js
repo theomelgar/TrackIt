@@ -22,13 +22,13 @@ export default function Habits() {
                 setList(res.data)
             })
             .catch(err => alert(err.response.data.message))
-    }, [update,token])
+    }, [update, token])
     return (
         <StyleHabits>
             <NavBar />
             <UserHabits>
                 <p>Meus hábitos</p>
-                <div onClick={() => setStart(!start)}>+</div>
+                <div data-test="habit-create-btn" onClick={() => setStart(!start)}>+</div>
             </UserHabits>
             {start && <Add token={token} setStart={setStart} UserData={UserData} setUpdate={setUpdate}></Add>}
             {list.length === 0 && (

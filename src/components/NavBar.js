@@ -14,7 +14,7 @@ export default function NavBar() {
         navigate('/')
     }
     return (
-        <NavStyle>
+        <NavStyle data-test="header">
             <h1>TrackIt</h1>
             <img src={UserData.image} alt='icone' />
             <Sair onClick={signout}>
