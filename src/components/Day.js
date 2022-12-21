@@ -33,4 +33,9 @@ const DayItem = styled.button`
     border: 1px solid ${props => dayColors[props.status].border};
     background-color: ${props => dayColors[props.status].background};
     color: ${props => dayColors[props.status].color};
+    &:hover{
+        transform: scale(1.1);
+        background-color: ${props => [props.status]=="available" ? "#CFCFCF" : "#FFFFFF"};
+        color: ${props => [props.status]=="available" ? "#FFFFFF" : "#000000"};
+    }
 `

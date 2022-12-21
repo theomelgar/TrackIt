@@ -87,6 +87,9 @@ const StyleMenu = styled.div`
     div{
         position: absolute;
         bottom: 20px;
-        left: auto;
+        left: auto; 
+        &:hover{
+            transform: scale(1.1);
+        }
     }
 `

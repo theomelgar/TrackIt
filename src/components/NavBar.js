@@ -67,4 +67,8 @@ const Sair = styled.div`
     right: 100px;
     top: 35%;
     color: #126BA5;
+    &:hover{
+            transform: scale(1.1);
+            opacity: 0.7;
+        }
 `

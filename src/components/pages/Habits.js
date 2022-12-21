@@ -37,7 +37,7 @@ export default function Habits() {
                 </Alert>
             )}
             <HabitList>
-                {list.map((activity) => <Habit key={activity.id} token={token} activity={activity} />)}
+                {list.map((activity) => <Habit setUpdate={setUpdate} key={activity.id} token={token} activity={activity} />)}
             </HabitList>
 
             <Menu />
@@ -71,6 +71,10 @@ const UserHabits = styled.div`
         font-size: 26.976px;
         line-height: 34px;
         cursor: pointer;
+        &:hover{
+            transform: scale(1.1);
+            opacity: 0.7;
+        }
     }
 `
 const HabitList = styled.div`

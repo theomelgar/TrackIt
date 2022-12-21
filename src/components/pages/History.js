@@ -91,7 +91,7 @@ export default function History() {
                                     <p>{l}</p>
                                 </div>
                             )}
-                            <button onClick={() => setVisible(false)}>X</button>
+                            <button onClick={() => setVisible(false)}>x</button>
                         </List>
                     }
                 </StyleCalendar>
@@ -110,15 +110,21 @@ const List = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-size: 19px;
     flex-wrap: wrap;
     text-align: center;
     border-radius:9px;
     border: 1px black solid;
     gap: 10px;
+    box-shadow: 5px 10px 18px #123aeb;
     div{
         margin: 2px;
     }
     button{
+        border: 1px solid black;
+        width: 24px;
+        border-radius:50%;
+        font-size: 20px;
         margin-bottom: 10px;
     }
 `

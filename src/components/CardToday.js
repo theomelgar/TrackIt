@@ -36,8 +36,8 @@ export default function CardToday({ activity, token, setUpdate }) {
             <p data-test="today-habit-name">{name}</p>
             
             <Streak color={currentSequence === highestSequence ? "#8FC549" : "#666666"}>
-                <p data-test="today-habit-sequence" >Sequência atual:<span>{currentSequence} dias</span> </p>
-                <p data-test="today-habit-record">Seu recorde:<span>{highestSequence} dias</span> </p>
+                <p data-test="today-habit-sequence" >Sequência atual:<span>{currentSequence} {currentSequence>1 ? "dias" : "dia"}</span> </p>
+                <p data-test="today-habit-record">Seu recorde:<span>{highestSequence} {currentSequence>1 ? "dias" : "dia"}</span> </p>
             </Streak>
             {!done ? (
                 <Check data-test="today-habit-check-btn" onClick={check} cor="#EBEBEB">
@@ -86,4 +86,9 @@ const Check = styled.div`
     background: ${props => props.cor};
     border: 1px solid #E7E7E7;
     border-radius: 5px;
+    cursor: pointer;
+    &:hover{
+        transform: scale(1.1);
+        opacity: 0.7;
+    }
 `

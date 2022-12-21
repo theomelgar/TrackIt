@@ -6,7 +6,7 @@ import { confirmAlert } from "react-confirm-alert";
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { api } from "../services/auth";
 
-export default function Habit({ activity, token }) {
+export default function Habit({ activity, token, setUpdate }) {
     const { week } = useContext(ListContext)
     const { id, name, days } = activity
     let status = 'available'
@@ -21,7 +21,7 @@ export default function Habit({ activity, token }) {
                     onClick: () => {
                         api
                             .delete(`habits/${id}`, { headers: { Authorization: `Bearer ${token}` } })
-                            .then(() => window.location.reload())
+                            .then(() => setUpdate(up=>!up))
                             .catch((err) => alert(err.response.data.message));
                     },
                 },
@@ -84,6 +84,11 @@ const StyleHabit = styled.div`
     ion-icon{
         padding: 7px 10px;
         cursor: pointer;
+        &:hover{
+            transform: scale(1.1);
+            transform: rotate(15deg);
+            opacity: 0.7;
+        }
     }
 `
 const Day = styled.div`

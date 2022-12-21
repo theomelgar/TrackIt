@@ -100,7 +100,7 @@ const StyleAdd = styled.div`
     gap: 7px;
     input{
         margin: 10px 6px;
-        width: 90%;
+        width: 93%;
         height: 45px;
         background: #FFFFFF;
         border: 1px solid #D5D5D5;
@@ -134,6 +134,7 @@ const Salvar = styled.button`
     text-align: center;
     &:hover{
         cursor: pointer;
+        transform: scale(1.1);
     }
 `
 
