@@ -1,13 +1,15 @@
 <br/>
 <br/>
-<p align="center"> TrackIt </p>
-<p>Neste projeto construi uma aplicação completa de acompanhamento de hábitos! Com direito a cadastro, login e muitas bibliotecas 🙂</p>
+<h1 align="center"> TrackIt </h1>
+<p>This project helps to set and track habits. It gives visual information in a calendar of done/undone habits. </p>
+<p>
+  Neste projeto construi uma aplicação completa de acompanhamento de hábitos! Com direito a cadastro, login e muitas bibliotecas 🙂</p>
 <p align="center">
 <img align="center" src="https://user-images.githubusercontent.com/93146829/208754865-135806dd-6508-4a83-bbc3-94c2943626f6.gif">
 </p>
 <br/>
 
-## :atom: Tecnologias Utilizadas
+## :atom: Technologies
 
 - [HTML](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
 - [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
